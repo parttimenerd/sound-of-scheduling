@@ -34,11 +34,11 @@ public interface BaseScheduler extends Scheduler, AutoCloseable {
     @Type
     class TaskStat {
         @Size(COMM_LENGTH)
-        String comm;
+        public String comm;
         @Unsigned
-        long dispatches;
+        public long dispatches;
         @Unsigned
-        long runtimeNs;
+        public long runtimeNs;
         boolean currentlyRunning;
         @Unsigned
         long lastStartNs;
