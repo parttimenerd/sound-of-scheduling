@@ -68,10 +68,10 @@ public class Main implements Runnable{
     @Option(names = "--window-size", defaultValue = "10", description = "Sliding window size for computing the rankings")
     int windowSize;
 
-    @Option(names = "--scale", defaultValue = "MAJOR_PENTATONIC", description = "Musical scale for the sound, one of: ${COMPLETION-CANDIDATES}")
+    @Option(names = "--scale", defaultValue = "MINOR_PENTATONIC", description = "Musical scale for the sound, one of: ${COMPLETION-CANDIDATES}")
     Scale scale;
 
-    @Option(names = "--runtime-instrument", defaultValue = "VIOLIN", description = "Instrument for the tasks with the most runtime")
+    @Option(names = "--runtime-instrument", defaultValue = "MARIMBA", description = "Instrument for the tasks with the most runtime, one of: ${COMPLETION-CANDIDATES}")
     Instrument runtimeInstrument;
 
     @Option(names = "--dispatches-instrument", defaultValue = "ACOUSTIC_GRAND_PIANO", description = "Instrument for the tasks with the most dispatches")
