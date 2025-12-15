@@ -83,7 +83,7 @@ public abstract class VTimeScheduler extends BPFProgram implements BaseScheduler
         if (isSmaller(vtime, vtime_now.get() - SCX_SLICE_DFL.value())) {
             vtime = vtime_now.get() - SCX_SLICE_DFL.value();
         }
-        scx_bpf_dispatch_vtime(p, SHARED_DSQ_ID, SCX_SLICE_DFL.value(), vtime, enq_flags);
+        scx_bpf_dsq_insert_vtime(p, SHARED_DSQ_ID, SCX_SLICE_DFL.value(), vtime, enq_flags);
     }
 
     @BPFFunction
@@ -93,7 +93,7 @@ public abstract class VTimeScheduler extends BPFProgram implements BaseScheduler
         if (!bpf_cpumask_test_cpu(cpu, p.val().cpus_ptr)) {
             return false;
         }
-        return scx_bpf_dispatch_from_dsq(iter, p, SCX_DSQ_LOCAL_ON.value() | cpu, SCX_ENQ_PREEMPT.value());
+        return scx_bpf_dsq_move(iter, p, SCX_DSQ_LOCAL_ON.value() | cpu, SCX_ENQ_PREEMPT.value());
     }
 
     @Override

@@ -48,7 +48,7 @@ Linux scheduler that logs task stats and produces sound
 
 ## Install
 
-Install a 6.12 (or later) kernel, on Ubuntu use [mainline](https://github.com/bkw777/mainline) if you're on Ubuntu 24.10 or older.
+Install a 6.13 (or later) kernel, on Ubuntu use [mainline](https://github.com/bkw777/mainline) if you're on Ubuntu 24.10 or older.
 
 You should also have installed:
 

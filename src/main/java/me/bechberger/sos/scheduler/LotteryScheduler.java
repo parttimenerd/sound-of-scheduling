@@ -66,7 +66,7 @@ public abstract class LotteryScheduler extends BPFProgram implements BaseSchedul
         if (schedulerSetting.get().scaleSliceLength()) {
             sliceLength = sliceLength / scx_bpf_dsq_nr_queued(SHARED_DSQ_ID);
         }
-        scx_bpf_dispatch(p, SHARED_DSQ_ID, sliceLength, enq_flags);
+        scx_bpf_dsq_insert(p, SHARED_DSQ_ID, sliceLength, enq_flags);
     }
 
     @BPFFunction
@@ -76,7 +76,7 @@ public abstract class LotteryScheduler extends BPFProgram implements BaseSchedul
         if (!bpf_cpumask_test_cpu(cpu, p.val().cpus_ptr)) {
             return false;
         }
-        return scx_bpf_dispatch_from_dsq(iter, p, SCX_DSQ_LOCAL_ON.value() | cpu, SCX_ENQ_PREEMPT.value());
+        return scx_bpf_dsq_move(iter, p, SCX_DSQ_LOCAL_ON.value() | cpu, SCX_ENQ_PREEMPT.value());
     }
 
     @Override
