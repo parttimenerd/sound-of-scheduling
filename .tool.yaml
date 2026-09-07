@@ -1,0 +1,60 @@
+tag: demo
+no_release: true
+tagline: A Linux eBPF scheduler written in Java (via hello-ebpf) that turns task scheduling events
+  into music — mapping CPU dispatches and runtime to notes on a musical scale in real time.
+tagline_short: Linux eBPF scheduler that turns task scheduling into music, written in Java.
+links:
+- label: Blog post + video ↗
+  url: https://mostlynerdless.de/blog/2025/03/25/hello-ebpf-a-scheduler-controlled-by-sound-20/
+- label: hello-ebpf ↗
+  url: https://github.com/parttimenerd/hello-ebpf
+when_to_use:
+- You want a fun demo of what you can build with hello-ebpf and eBPF schedulers
+- You are curious what your Linux scheduler sounds like
+when_not_to_use:
+- You need a production scheduler or performance tool — this is a demo
+install:
+- label: Build from source
+  lang: bash
+  code: |
+    # requires Linux 6.13+, libbpf-dev, clang, Java 23, PulseAudio
+    git clone https://github.com/parttimenerd/sound-of-scheduling
+    cd sound-of-scheduling
+    mvn package
+usage:
+- label: Run
+  lang: bash
+  code: |
+    ./scheduler.sh
+    # focus on firefox, faster tempo, scale based on task count:
+    ./scheduler.sh --bpm=200 --scale-slice --filter firefox
+how_to:
+- title: Tune the sound and focus on specific processes
+  body: |
+    Control tempo, musical scale, and which processes to include:
+    ```bash
+    # 200 BPM, blues scale, only processes with "java" in their name
+    ./scheduler.sh --bpm=200 --scale=BLUES --filter java
+
+    # scale the time slice based on number of active tasks
+    ./scheduler.sh --scale-slice
+
+    # choose instruments for dispatches vs runtime
+    ./scheduler.sh --dispatches-instrument=PIANO --runtime-instrument=STRINGS
+    ```
+    Available scales: `MAJOR_PENTATONIC`, `MINOR_PENTATONIC`, `BLUES`, `WHOLE_TONE`,
+    `HARMONIC_MINOR`, `MELODIC_MINOR`, `HARMONIC_MAJOR`.
+
+- title: Choose a scheduler type
+  body: |
+    Three scheduler types are available:
+    ```bash
+    ./scheduler.sh -t FIFO      # FIFO scheduler (default)
+    ./scheduler.sh -t LOTTERY   # lottery scheduler
+    ./scheduler.sh -t VTIME     # virtual time scheduler
+    ```
+    Use `--cores` to limit how many CPU cores the scheduler uses:
+    ```bash
+    ./scheduler.sh -t VTIME --cores=4
+    ```
+note: Requires PulseAudio running at /run/user/1000/pulse/native.
